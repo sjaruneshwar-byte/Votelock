@@ -1,0 +1,4 @@
+.env
+votelock.db
+__pycache__/
+*.pyc

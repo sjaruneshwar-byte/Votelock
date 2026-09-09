@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %} VoteLock | Verify OTP {% endblock %}
+{% block extra_css %}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+/>
+
+{% endblock %} {% block content %}
+
+<div class="auth-page">
+  <div class="auth-wrapper">
+    <div class="auth-brand">
+      <div class="big-logo">✉️</div>
+
+      <h1>VoteLock</h1>
+
+      <p>Email Verification</p>
+    </div>
+
+    <div class="auth-card otp-card">
+      <h2>Verify your email</h2>
+
+      <p class="auth-subtitle">
+        We've sent a 6-digit verification code to your email address.
+      </p>
+
+      <form method="POST" action="{{ url_for('auth.verify_otp') }}">
+        <div class="form-group">
+          <label>Verification OTP</label>
+
+          <input
+            type="text"
+            name="otp"
+            class="otp-input"
+            maxlength="6"
+            pattern="[0-9]{6}"
+            placeholder="000000"
+            required
+          />
+        </div>
+
+        <button type="submit" class="auth-button">Verify OTP</button>
+      </form>
+
+      <p class="otp-expiry">⏱ OTP expires in 5 minutes</p>
+
+      <div class="auth-footer">
+        Entered the wrong email?
+
+        <a href="{{ url_for('auth.register') }}"> Register again </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

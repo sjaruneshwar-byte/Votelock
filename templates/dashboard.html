@@ -1,0 +1,265 @@
+{% extends "base.html" %} {% block title %} VoteLock | Dashboard {% endblock %}
+{% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}"
+/>
+{% endblock %} {% block page_heading %} Dashboard {% endblock %} {% block
+content %}
+
+<div class="dashboard-container">
+  <!-- ==================== WELCOME ==================== -->
+
+  <section class="welcome-section">
+    <div class="welcome-content">
+      <p class="eyebrow">ADMIN CONTROL CENTER</p>
+
+      <h1>Welcome back, {{ admin_name }}</h1>
+
+      <p class="welcome-description">
+        Monitor and manage your smart electronic voting system from one secure
+        dashboard.
+      </p>
+    </div>
+
+    <div class="system-status">
+      <span class="status-dot"></span>
+      <span>System Ready</span>
+    </div>
+  </section>
+
+  <!-- ==================== STATISTICS ==================== -->
+
+  <section class="stats-grid">
+    <!-- VOTERS -->
+
+    <div class="stat-card">
+      <div class="stat-icon voter-icon">👥</div>
+
+      <div class="stat-content">
+        <span class="stat-label"> Total Voters </span>
+
+        <strong class="stat-number"> {{ stats.voters }} </strong>
+      </div>
+    </div>
+
+    <!-- CANDIDATES -->
+
+    <div class="stat-card">
+      <div class="stat-icon candidate-icon">🗳️</div>
+
+      <div class="stat-content">
+        <span class="stat-label"> Candidates </span>
+
+        <strong class="stat-number"> {{ stats.candidates }} </strong>
+      </div>
+    </div>
+
+    <!-- VOTES -->
+
+    <div class="stat-card">
+      <div class="stat-icon vote-icon">✓</div>
+
+      <div class="stat-content">
+        <span class="stat-label"> Votes Cast </span>
+
+        <strong class="stat-number"> {{ stats.votes }} </strong>
+      </div>
+    </div>
+
+    <!-- TURNOUT -->
+
+    <div class="stat-card">
+      <div class="stat-icon turnout-icon">📈</div>
+
+      <div class="stat-content">
+        <span class="stat-label"> Turnout </span>
+
+        <strong class="stat-number"> {{ stats.turnout }}% </strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN DASHBOARD ==================== -->
+
+  <section class="dashboard-grid">
+    <!-- ==================== ELECTION OVERVIEW ==================== -->
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div>
+          <h2>Election Overview</h2>
+
+          <p>Current voting statistics</p>
+        </div>
+
+        <span class="card-icon"> 📊 </span>
+      </div>
+
+      <!-- TURNOUT -->
+
+      <div class="progress-section">
+        <div class="progress-label">
+          <span> Voter Turnout </span>
+
+          <strong> {{ stats.turnout }}% </strong>
+        </div>
+
+        <!--
+          IMPORTANT:
+          We use data-turnout instead of putting
+          Jinja directly inside CSS.
+        -->
+
+        <div class="progress-bar">
+          <div class="progress-fill" data-turnout="{{ stats.turnout }}"></div>
+        </div>
+      </div>
+
+      <!-- VOTING STATUS -->
+
+      <div class="overview-items">
+        <div class="overview-item">
+          <span> Voted </span>
+
+          <strong> {{ stats.voted_voters }} </strong>
+        </div>
+
+        <div class="overview-item">
+          <span> Yet to Vote </span>
+
+          <strong> {{ stats.pending_voters }} </strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== QUICK ACTIONS ==================== -->
+
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div>
+          <h2>Quick Actions</h2>
+
+          <p>Manage election data</p>
+        </div>
+
+        <span class="card-icon"> ⚡ </span>
+      </div>
+
+      <div class="quick-actions">
+        <!-- ADD VOTER -->
+
+        <a href="{{ url_for('voters.add_voter') }}" class="quick-action">
+          <span class="quick-action-icon"> 👤 </span>
+
+          <div>
+            <strong> Add Voter </strong>
+
+            <small> Register a new voter </small>
+          </div>
+
+          <span class="action-arrow"> → </span>
+        </a>
+
+        <!-- ADD CANDIDATE -->
+
+        <a
+          href="{{ url_for('candidates.add_candidate') }}"
+          class="quick-action"
+        >
+          <span class="quick-action-icon"> 🗳️ </span>
+
+          <div>
+            <strong> Add Candidate </strong>
+
+            <small> Register a candidate </small>
+          </div>
+
+          <span class="action-arrow"> → </span>
+        </a>
+
+        <!-- MANAGE VOTERS -->
+
+        <a href="{{ url_for('voters.list_voters') }}" class="quick-action">
+          <span class="quick-action-icon"> 📋 </span>
+
+          <div>
+            <strong> Manage Voters </strong>
+
+            <small> View or remove voters </small>
+          </div>
+
+          <span class="action-arrow"> → </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== RECENT ACTIVITY ==================== -->
+
+  <section class="dashboard-card activity-card">
+    <div class="card-header">
+      <div>
+        <h2>Recent Activity</h2>
+
+        <p>Latest system events</p>
+      </div>
+
+      <span class="card-icon"> 🔔 </span>
+    </div>
+
+    {% if logs %}
+
+    <div class="activity-list">
+      {% for log in logs %}
+
+      <div class="activity-item">
+        <div class="activity-icon">✓</div>
+
+        <div class="activity-content">
+          <strong> {{ log["event_type"] }} </strong>
+
+          <p>{{ log["description"] }}</p>
+        </div>
+
+        <time> {{ log["created_at"] }} </time>
+      </div>
+
+      {% endfor %}
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+      <span> 📋 </span>
+
+      <p>No activity recorded yet.</p>
+    </div>
+
+    {% endif %}
+  </section>
+</div>
+
+<!-- ==================== TURNOUT SCRIPT ==================== -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const progressBar = document.querySelector(".progress-fill");
+
+    if (progressBar) {
+      let turnout = parseFloat(progressBar.dataset.turnout);
+
+      // Prevent invalid values
+      if (isNaN(turnout)) {
+        turnout = 0;
+      }
+
+      // Keep value between 0 and 100
+      turnout = Math.max(0, Math.min(100, turnout));
+
+      progressBar.style.width = turnout + "%";
+    }
+  });
+</script>
+
+{% endblock %}
