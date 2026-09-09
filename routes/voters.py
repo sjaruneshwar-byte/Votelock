@@ -145,16 +145,12 @@ def add_voter():
         )
 
         # ==============================================
-        # GENERATE QR TOKEN
+        # GENERATE UNIQUE QR TOKEN
         # ==============================================
 
         qr_token = secrets.token_urlsafe(
             24
         )
-
-        # ==============================================
-        # SAVE VOTER
-        # ==============================================
 
         conn = get_db()
 
@@ -198,7 +194,7 @@ def add_voter():
             )
 
             # ==========================================
-            # STORE TEMPORARY CREDENTIALS
+            # STORE CREDENTIALS FOR ONE-TIME DISPLAY
             # ==========================================
 
             session[
@@ -287,6 +283,44 @@ def credentials():
     return render_template(
         "voter_credentials.html",
         credentials=credentials
+    )
+
+
+# ======================================================
+# VIEW VOTER QR CODE
+# ======================================================
+
+@voters_bp.route(
+    "/voters/qr/<voter_id>"
+)
+def view_qr(voter_id):
+
+    if not admin_required():
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    voter = get_voter(
+        voter_id
+    )
+
+    if voter is None:
+
+        flash(
+            "Voter not found.",
+            "error"
+        )
+
+        return redirect(
+            url_for(
+                "voters.list_voters"
+            )
+        )
+
+    return render_template(
+        "voter_qr.html",
+        voter=voter
     )
 
 

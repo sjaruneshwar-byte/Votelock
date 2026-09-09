@@ -24,6 +24,8 @@ content %}
     </a>
   </div>
 
+  <!-- SEARCH -->
+
   <div class="table-toolbar">
     <form method="GET" action="{{ url_for('voters.list_voters') }}">
       <input
@@ -36,6 +38,8 @@ content %}
       <button type="submit">Search</button>
     </form>
   </div>
+
+  <!-- VOTER TABLE -->
 
   <div class="table-card">
     <div class="table-responsive">
@@ -51,6 +55,8 @@ content %}
             <th>Email</th>
 
             <th>Status</th>
+
+            <th>QR Code</th>
 
             <th>Actions</th>
           </tr>
@@ -82,13 +88,29 @@ content %}
               {% endif %}
             </td>
 
+            <!-- QR CODE -->
+
+            <td>
+              <a
+                href="{{ url_for(
+                    'voters.view_qr',
+                    voter_id=voter['voter_id']
+                ) }}"
+                class="edit-btn"
+              >
+                View QR
+              </a>
+            </td>
+
+            <!-- ACTIONS -->
+
             <td>
               <div class="action-buttons">
                 <a
                   href="{{ url_for(
-                                        'voters.edit_voter',
-                                        voter_id=voter['voter_id']
-                                    ) }}"
+                      'voters.edit_voter',
+                      voter_id=voter['voter_id']
+                  ) }}"
                   class="edit-btn"
                 >
                   Edit
@@ -99,9 +121,9 @@ content %}
                 <form
                   method="POST"
                   action="{{ url_for(
-                                        'voters.remove_voter',
-                                        voter_id=voter['voter_id']
-                                    ) }}"
+                      'voters.remove_voter',
+                      voter_id=voter['voter_id']
+                  ) }}"
                   onsubmit="
                     return confirm(
                       'Are you sure you want to delete this voter?',
@@ -129,7 +151,7 @@ content %}
           {% else %}
 
           <tr>
-            <td colspan="6" class="empty-table">No voters found.</td>
+            <td colspan="7" class="empty-table">No voters found.</td>
           </tr>
 
           {% endfor %}
