@@ -32,6 +32,10 @@ def admin_required():
     return "admin_id" in session
 
 
+# ======================================================
+# VOTER LIST
+# ======================================================
+
 @voters_bp.route("/voters")
 def list_voters():
 
@@ -106,15 +110,9 @@ def add_voter():
             ""
         ).strip()
 
-        username = request.form.get(
-            "username",
-            ""
-        ).strip()
-
-        password = request.form.get(
-            "password",
-            ""
-        )
+        # ==============================================
+        # VALIDATION
+        # ==============================================
 
         if not voter_id or not name:
 
@@ -127,19 +125,36 @@ def add_voter():
                 url_for("voters.add_voter")
             )
 
+        # ==============================================
+        # GENERATE TEMPORARY CREDENTIALS
+        # ==============================================
+
+        username = (
+            "VOTER_" +
+            voter_id.upper()
+        )
+
+        temporary_password = (
+            secrets.token_urlsafe(8)
+        )
+
+        password_hash = (
+            generate_password_hash(
+                temporary_password
+            )
+        )
+
+        # ==============================================
+        # GENERATE QR TOKEN
+        # ==============================================
+
         qr_token = secrets.token_urlsafe(
             24
         )
 
-        password_hash = None
-
-        if password:
-
-            password_hash = (
-                generate_password_hash(
-                    password
-                )
-            )
+        # ==============================================
+        # SAVE VOTER
+        # ==============================================
 
         conn = get_db()
 
@@ -164,7 +179,7 @@ def add_voter():
                     name,
                     email,
                     department,
-                    username or None,
+                    username,
                     password_hash,
                     qr_token
                 )
@@ -172,19 +187,35 @@ def add_voter():
 
             conn.commit()
 
+            # ==========================================
+            # AUDIT LOG
+            # ==========================================
+
             add_audit_log(
                 "VOTER_ADDED",
                 f"Voter {voter_id} was registered.",
                 voter_id
             )
 
-            flash(
-                "Voter added successfully.",
-                "success"
-            )
+            # ==========================================
+            # STORE TEMPORARY CREDENTIALS
+            # ==========================================
+
+            session[
+                "generated_credentials"
+            ] = {
+
+                "voter_id": voter_id,
+
+                "username": username,
+
+                "password": temporary_password
+            }
 
             return redirect(
-                url_for("voters.list_voters")
+                url_for(
+                    "voters.credentials"
+                )
             )
 
         except Exception as e:
@@ -194,14 +225,14 @@ def add_voter():
             if "UNIQUE constraint" in str(e):
 
                 flash(
-                    "Voter ID or username already exists.",
+                    "Voter ID or generated username already exists.",
                     "error"
                 )
 
             else:
 
                 flash(
-                    "Unable to add voter.",
+                    f"Unable to add voter: {str(e)}",
                     "error"
                 )
 
@@ -209,8 +240,53 @@ def add_voter():
 
             conn.close()
 
+        return redirect(
+            url_for(
+                "voters.list_voters"
+            )
+        )
+
     return render_template(
         "add_voter.html"
+    )
+
+
+# ======================================================
+# DISPLAY TEMPORARY CREDENTIALS
+# ======================================================
+
+@voters_bp.route(
+    "/voters/credentials"
+)
+def credentials():
+
+    if not admin_required():
+
+        return redirect(
+            url_for("auth.login")
+        )
+
+    credentials = session.pop(
+        "generated_credentials",
+        None
+    )
+
+    if credentials is None:
+
+        flash(
+            "No temporary credentials available.",
+            "error"
+        )
+
+        return redirect(
+            url_for(
+                "voters.list_voters"
+            )
+        )
+
+    return render_template(
+        "voter_credentials.html",
+        credentials=credentials
     )
 
 
@@ -242,7 +318,9 @@ def edit_voter(voter_id):
         )
 
         return redirect(
-            url_for("voters.list_voters")
+            url_for(
+                "voters.list_voters"
+            )
         )
 
     if request.method == "POST":
@@ -309,7 +387,9 @@ def edit_voter(voter_id):
         )
 
         return redirect(
-            url_for("voters.list_voters")
+            url_for(
+                "voters.list_voters"
+            )
         )
 
     return render_template(
@@ -359,5 +439,7 @@ def remove_voter(voter_id):
         )
 
     return redirect(
-        url_for("voters.list_voters")
+        url_for(
+            "voters.list_voters"
+        )
     )
