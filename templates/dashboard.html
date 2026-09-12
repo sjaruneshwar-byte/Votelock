@@ -8,7 +8,9 @@
 content %}
 
 <div class="dashboard-container">
-  <!-- ==================== WELCOME ==================== -->
+  <!-- =====================================================
+       WELCOME SECTION
+  ====================================================== -->
 
   <section class="welcome-section">
     <div class="welcome-content">
@@ -28,10 +30,12 @@ content %}
     </div>
   </section>
 
-  <!-- ==================== STATISTICS ==================== -->
+  <!-- =====================================================
+       STATISTICS
+  ====================================================== -->
 
   <section class="stats-grid">
-    <!-- VOTERS -->
+    <!-- TOTAL VOTERS -->
 
     <div class="stat-card">
       <div class="stat-icon voter-icon">👥</div>
@@ -80,10 +84,142 @@ content %}
     </div>
   </section>
 
-  <!-- ==================== MAIN DASHBOARD ==================== -->
+  <!-- =====================================================
+       QR VERIFICATION SECTION
+  ====================================================== -->
+
+  <section class="qr-dashboard-card">
+    <!-- HEADER -->
+
+    <div class="qr-dashboard-header">
+      <div>
+        <p class="qr-eyebrow">VOTER VERIFICATION</p>
+
+        <h2>QR Code Verification</h2>
+
+        <p>
+          Scan a voter's QR code using the connected USB webcam to verify their
+          registration and voting status.
+        </p>
+      </div>
+
+      <div class="qr-header-icon">🔍</div>
+    </div>
+
+    <!-- QR SCANNER CONTENT -->
+
+    <div class="qr-dashboard-content">
+      <!-- ==============================
+           CAMERA
+      =============================== -->
+
+      <div class="qr-camera-panel">
+        <div class="qr-panel-title">
+          <div>
+            <h3>Scan Voter QR</h3>
+
+            <p>Position the QR code inside the scanning area.</p>
+          </div>
+
+          <span class="camera-icon"> 📷 </span>
+        </div>
+
+        <!-- CAMERA CONTAINER -->
+
+        <div id="qr-reader" class="dashboard-qr-reader"></div>
+
+        <!-- CAMERA STATUS -->
+
+        <div id="scanner-status" class="scanner-status">
+          Waiting for camera...
+        </div>
+      </div>
+
+      <!-- ==============================
+           VERIFICATION RESULT
+      =============================== -->
+
+      <div class="qr-result-panel">
+        <div class="qr-panel-title">
+          <div>
+            <h3>Verification Result</h3>
+
+            <p>Voter information will appear here after scanning.</p>
+          </div>
+
+          <span class="result-icon"> ✓ </span>
+        </div>
+
+        <!-- MESSAGE -->
+
+        <div id="verification-message" class="verification-message">
+          Scan a QR code to verify the voter.
+        </div>
+
+        <!-- VOTER DETAILS -->
+
+        <div id="voter-details" class="voter-details" style="display: none">
+          <!-- VOTER ID -->
+
+          <div class="verification-detail">
+            <span> Voter ID </span>
+
+            <strong id="voter-id"> </strong>
+          </div>
+
+          <!-- NAME -->
+
+          <div class="verification-detail">
+            <span> Name </span>
+
+            <strong id="voter-name"> </strong>
+          </div>
+
+          <!-- EMAIL -->
+
+          <div class="verification-detail">
+            <span> Email </span>
+
+            <strong id="voter-email"> </strong>
+          </div>
+
+          <!-- DEPARTMENT -->
+
+          <div class="verification-detail">
+            <span> Department </span>
+
+            <strong id="voter-department"> </strong>
+          </div>
+
+          <!-- VOTING STATUS -->
+
+          <div class="verification-detail status-detail">
+            <span> Voting Status </span>
+
+            <strong id="voter-status"> </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY NOTE -->
+
+    <div class="qr-dashboard-security">
+      <span> 🔒 </span>
+
+      <p>
+        QR verification uses the voter's unique verification token. Only valid
+        registered voter tokens are accepted by the system.
+      </p>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       ELECTION OVERVIEW + QUICK ACTIONS
+  ====================================================== -->
 
   <section class="dashboard-grid">
-    <!-- ==================== ELECTION OVERVIEW ==================== -->
+    <!-- ELECTION OVERVIEW -->
 
     <div class="dashboard-card">
       <div class="card-header">
@@ -105,12 +241,6 @@ content %}
           <strong> {{ stats.turnout }}% </strong>
         </div>
 
-        <!--
-          IMPORTANT:
-          We use data-turnout instead of putting
-          Jinja directly inside CSS.
-        -->
-
         <div class="progress-bar">
           <div class="progress-fill" data-turnout="{{ stats.turnout }}"></div>
         </div>
@@ -119,13 +249,13 @@ content %}
       <!-- VOTING STATUS -->
 
       <div class="overview-items">
-        <div class="overview-item">
+        <div>
           <span> Voted </span>
 
           <strong> {{ stats.voted_voters }} </strong>
         </div>
 
-        <div class="overview-item">
+        <div>
           <span> Yet to Vote </span>
 
           <strong> {{ stats.pending_voters }} </strong>
@@ -133,7 +263,7 @@ content %}
       </div>
     </div>
 
-    <!-- ==================== QUICK ACTIONS ==================== -->
+    <!-- QUICK ACTIONS -->
 
     <div class="dashboard-card">
       <div class="card-header">
@@ -195,7 +325,9 @@ content %}
     </div>
   </section>
 
-  <!-- ==================== RECENT ACTIVITY ==================== -->
+  <!-- =====================================================
+       RECENT ACTIVITY
+  ====================================================== -->
 
   <section class="dashboard-card activity-card">
     <div class="card-header">
@@ -240,25 +372,39 @@ content %}
   </section>
 </div>
 
-<!-- ==================== TURNOUT SCRIPT ==================== -->
+<!-- =====================================================
+     QR CODE SCANNER LIBRARY
+====================================================== -->
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- =====================================================
+     QR SCANNER JAVASCRIPT
+====================================================== -->
+
+<script src="{{ url_for('static', filename='js/qr_scanner.js') }}"></script>
+
+<!-- =====================================================
+     TURNOUT SCRIPT
+====================================================== -->
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const progressBar = document.querySelector(".progress-fill");
 
-    if (progressBar) {
-      let turnout = parseFloat(progressBar.dataset.turnout);
-
-      // Prevent invalid values
-      if (isNaN(turnout)) {
-        turnout = 0;
-      }
-
-      // Keep value between 0 and 100
-      turnout = Math.max(0, Math.min(100, turnout));
-
-      progressBar.style.width = turnout + "%";
+    if (!progressBar) {
+      return;
     }
+
+    let turnout = parseFloat(progressBar.dataset.turnout);
+
+    if (isNaN(turnout)) {
+      turnout = 0;
+    }
+
+    turnout = Math.max(0, Math.min(100, turnout));
+
+    progressBar.style.width = turnout + "%";
   });
 </script>
 

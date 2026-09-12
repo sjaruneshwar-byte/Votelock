@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% block title %} VoteLock | QR Verification {%
+endblock %} {% block extra_css %}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for(
+        'static',
+        filename='css/qr_scanner.css'
+    ) }}"
+/>
+
+{% endblock %} {% block content %}
+
+<div class="scanner-page">
+  <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+  <div class="scanner-header">
+    <div>
+      <p class="eyebrow">VOTER VERIFICATION</p>
+
+      <h1>QR Code Scanner</h1>
+
+      <p>Scan the voter's QR code using the connected camera.</p>
+    </div>
+
+    <a href="{{ url_for('voters.list_voters') }}" class="back-button">
+      ← Back to Voters
+    </a>
+  </div>
+
+  <!-- =====================================================
+         SCANNER CARD
+         ===================================================== -->
+
+  <div class="scanner-card">
+    <!-- =================================================
+             LEFT SIDE - CAMERA
+             ================================================= -->
+
+    <div class="scanner-left">
+      <h2>Scan Voter QR</h2>
+
+      <p class="scanner-description">
+        Select the connected camera and position the QR code inside the scanning
+        area.
+      </p>
+
+      <!-- CAMERA SELECTOR -->
+
+      <select
+        id="camera-select"
+        class="camera-select"
+        style="display: none"
+      ></select>
+
+      <!-- QR CAMERA -->
+
+      <div id="qr-reader"></div>
+
+      <!-- CAMERA STATUS -->
+
+      <div id="scanner-status" class="scanner-status">
+        Initializing camera...
+      </div>
+    </div>
+
+    <!-- =================================================
+             RIGHT SIDE - VERIFICATION
+             ================================================= -->
+
+    <div class="scanner-right">
+      <h2>Verification Result</h2>
+
+      <!-- MESSAGE -->
+
+      <div id="verification-message" class="verification-message">
+        Scan a QR code to verify the voter.
+      </div>
+
+      <!-- VOTER DETAILS -->
+
+      <div id="voter-details" class="voter-details" style="display: none">
+        <div class="detail-row">
+          <span> Voter ID </span>
+
+          <strong id="voter-id"> </strong>
+        </div>
+
+        <div class="detail-row">
+          <span> Name </span>
+
+          <strong id="voter-name"> </strong>
+        </div>
+
+        <div class="detail-row">
+          <span> Email </span>
+
+          <strong id="voter-email"> </strong>
+        </div>
+
+        <div class="detail-row">
+          <span> Department </span>
+
+          <strong id="voter-department"> </strong>
+        </div>
+
+        <div class="detail-row">
+          <span> Voting Status </span>
+
+          <strong id="voter-status"> </strong>
+        </div>
+      </div>
+
+      <!-- SECURITY INFORMATION -->
+
+      <div class="scanner-security-note">
+        🔒
+
+        <span>
+          Only a valid VoteLock QR token can be used for voter verification.
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     QR SCANNER LIBRARY
+     ========================================================= -->
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- =========================================================
+     VOTELOCK QR SCANNER
+     ========================================================= -->
+
+<script src="{{ url_for(
+        'static',
+        filename='js/qr_scanner.js'
+    ) }}"></script>
+
+{% endblock %}

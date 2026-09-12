@@ -7,86 +7,153 @@
 
     <title>{% block title %} VoteLock {% endblock %}</title>
 
+    <!-- =====================================================
+         GLOBAL CSS
+         ===================================================== -->
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
 
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/extra.css') }}"
+    />
+
+    <!-- =====================================================
+         PAGE-SPECIFIC CSS
+         ===================================================== -->
+
     {% block extra_css %} {% endblock %}
   </head>
 
   <body>
-    {% if session.get("admin_id") %}
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
     <aside class="sidebar">
-      <div class="logo-area">
+      <div class="sidebar-header">
         <div class="logo-icon">🗳️</div>
 
-        <div>
-          <h2>VoteLock</h2>
-          <span>Admin Panel</span>
+        <div class="logo-text">
+          <strong>VoteLock</strong>
+          <span>Smart Voting System</span>
         </div>
       </div>
 
-      <nav>
+      <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+      <nav class="sidebar-nav">
         <a href="{{ url_for('admin.dashboard') }}" class="nav-item">
-          📊
+          <span class="nav-icon">▦</span>
           <span>Dashboard</span>
         </a>
 
         <a href="{{ url_for('voters.list_voters') }}" class="nav-item">
-          👥
+          <span class="nav-icon">👥</span>
           <span>Voters</span>
         </a>
 
         <a href="{{ url_for('candidates.list_candidates') }}" class="nav-item">
-          🗳️
+          <span class="nav-icon">🗳</span>
           <span>Candidates</span>
         </a>
+
+        {% if session.get("admin_id") %}
+
+        <a href="{{ url_for('voters.add_voter') }}" class="nav-item">
+          <span class="nav-icon">＋</span>
+          <span>Add Voter</span>
+        </a>
+
+        <a href="{{ url_for('candidates.add_candidate') }}" class="nav-item">
+          <span class="nav-icon">＋</span>
+          <span>Add Candidate</span>
+        </a>
+
+        {% endif %}
       </nav>
 
-      <div class="sidebar-bottom">
+      <!-- =================================================
+             SIDEBAR FOOTER
+             ================================================= -->
+
+      <div class="sidebar-footer">
+        {% if session.get("admin_id") %}
+
         <a href="{{ url_for('auth.logout') }}" class="logout-link">
-          🚪 Logout
+          <span>↪</span>
+          Logout
         </a>
+
+        {% endif %}
       </div>
     </aside>
 
-    {% endif %}
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
 
-    <main class="{% if session.get('admin_id') %}main-content{% endif %}">
-      {% if session.get("admin_id") %}
+    <main class="main-content">
+      <!-- =================================================
+             TOP BAR
+             ================================================= -->
 
       <header class="topbar">
-        <div>
-          <h3>{% block page_heading %} VoteLock {% endblock %}</h3>
+        <div class="topbar-heading">
+          {% block page_heading %} VoteLock {% endblock %}
         </div>
 
-        <div class="admin-profile">
-          <div class="admin-avatar">
-            {{ session.get("admin_name", "A")[0]|upper }}
+        <div class="topbar-user">
+          {% if session.get("admin_id") %}
+
+          <div class="user-avatar">A</div>
+
+          <div class="user-details">
+            <strong> Administrator </strong>
+
+            <span> Election Management </span>
           </div>
 
-          <div>
-            <strong> {{ session.get("admin_name") }} </strong>
-
-            <small> Administrator </small>
-          </div>
+          {% endif %}
         </div>
       </header>
 
-      {% endif %} {% with messages = get_flashed_messages(with_categories=true)
-      %} {% if messages %}
+      <!-- =================================================
+             FLASH MESSAGES
+             ================================================= -->
 
       <div class="flash-container">
-        {% for category, message in messages %}
+        {% with messages = get_flashed_messages( with_categories=true ) %} {% if
+        messages %} {% for category, message in messages %}
 
-        <div class="flash {{ category }}">{{ message }}</div>
+        <div class="flash-message {{ category }}">
+          <span class="flash-icon">
+            {% if category == "success" %} ✓ {% elif category == "error" %} ! {%
+            else %} ℹ {% endif %}
+          </span>
 
-        {% endfor %}
+          <span> {{ message }} </span>
+        </div>
+
+        {% endfor %} {% endif %} {% endwith %}
       </div>
 
-      {% endif %} {% endwith %} {% block content %} {% endblock %}
+      <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+      <section class="content-area">{% block content %} {% endblock %}</section>
     </main>
+
+    <!-- =====================================================
+         GLOBAL JAVASCRIPT
+         ===================================================== -->
+
+    {% block extra_js %} {% endblock %}
   </body>
 </html>

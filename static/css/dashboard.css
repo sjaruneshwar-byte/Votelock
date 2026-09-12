@@ -1,37 +1,84 @@
+/* ============================================================
+   VOTELOCK DASHBOARD
+   ============================================================ */
+
 .dashboard-container {
-  padding: 35px;
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 32px 40px 50px;
+
+  box-sizing: border-box;
 }
+
+/* ============================================================
+   WELCOME
+   ============================================================ */
 
 .welcome-section {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
-  margin-bottom: 30px;
+  gap: 25px;
+
+  margin-bottom: 28px;
+}
+
+.welcome-content {
+  min-width: 0;
+}
+
+.eyebrow,
+.qr-eyebrow {
+  margin: 0 0 7px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
 }
 
 .welcome-section h1 {
-  margin: 0 0 8px;
+  margin: 0;
 
   color: #0f172a;
 
   font-size: 30px;
+
+  line-height: 1.2;
 }
 
-.welcome-section p:last-child {
+.welcome-description {
+  margin: 8px 0 0;
+
   color: #64748b;
 
-  margin: 0;
+  font-size: 14px;
+
+  line-height: 1.6;
 }
 
 .system-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  flex-shrink: 0;
+
+  padding: 10px 15px;
+
   background: #dcfce7;
 
   color: #166534;
 
-  padding: 10px 15px;
+  border: 1px solid #bbf7d0;
 
   border-radius: 30px;
 
@@ -41,22 +88,24 @@
 }
 
 .status-dot {
-  display: inline-block;
-
   width: 8px;
   height: 8px;
+
+  margin-right: 8px;
 
   background: #22c55e;
 
   border-radius: 50%;
-
-  margin-right: 7px;
 }
+
+/* ============================================================
+   STATISTICS
+   ============================================================ */
 
 .stats-grid {
   display: grid;
 
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   gap: 18px;
 
@@ -64,21 +113,33 @@
 }
 
 .stat-card {
-  background: white;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 15px;
-
-  padding: 22px;
-
   display: flex;
 
   align-items: center;
 
   gap: 15px;
 
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+  min-width: 0;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
 }
 
 .stat-icon {
@@ -90,6 +151,8 @@
   align-items: center;
   justify-content: center;
 
+  flex-shrink: 0;
+
   border-radius: 12px;
 
   background: #eff6ff;
@@ -97,29 +160,443 @@
   font-size: 22px;
 }
 
-.stat-card span,
-.stat-card strong {
-  display: block;
+.stat-content {
+  min-width: 0;
 }
 
-.stat-card span {
+.stat-label {
+  display: block;
+
   color: #64748b;
 
   font-size: 13px;
+
+  font-weight: 500;
 }
 
-.stat-card strong {
+.stat-number {
+  display: block;
+
+  margin-top: 4px;
+
   color: #0f172a;
 
   font-size: 25px;
 
-  margin-top: 4px;
+  line-height: 1;
 }
+
+/* ============================================================
+   QR VERIFICATION DASHBOARD CARD
+   ============================================================ */
+
+.qr-dashboard-card {
+  width: 100%;
+
+  margin-bottom: 25px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe4ee;
+
+  border-radius: 16px;
+
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
+}
+
+/* ---------- QR HEADER ---------- */
+
+.qr-dashboard-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding-bottom: 22px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.qr-dashboard-header h2 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 21px;
+
+  font-weight: 700;
+}
+
+.qr-dashboard-header p:last-child {
+  max-width: 720px;
+
+  margin: 7px 0 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+.qr-header-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 12px;
+
+  font-size: 22px;
+}
+
+/* ============================================================
+   QR DASHBOARD CONTENT
+   ============================================================ */
+
+.qr-dashboard-content {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(0, 0.95fr);
+
+  gap: 22px;
+
+  margin-top: 24px;
+}
+
+/* ============================================================
+   CAMERA PANEL
+   ============================================================ */
+
+.qr-camera-panel,
+.qr-result-panel {
+  min-width: 0;
+
+  padding: 22px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 13px;
+
+  box-sizing: border-box;
+}
+
+.qr-panel-title {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.qr-panel-title h3 {
+  margin: 0;
+
+  color: #172554;
+
+  font-size: 17px;
+}
+
+.qr-panel-title p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.camera-icon,
+.result-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #dbe2ea;
+
+  border-radius: 9px;
+
+  font-size: 17px;
+}
+
+/* ============================================================
+   QR READER
+   ============================================================ */
+
+.dashboard-qr-reader {
+  width: 100%;
+
+  min-height: 330px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #0f172a;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 12px;
+}
+
+/* html5-qrcode generated elements */
+
+.dashboard-qr-reader video {
+  width: 100% !important;
+
+  max-height: 340px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+}
+
+.dashboard-qr-reader img {
+  max-width: 100%;
+}
+
+/* Hide unnecessary library text/button styling */
+
+.dashboard-qr-reader__dashboard_section {
+  width: 100%;
+}
+
+/* ============================================================
+   SCANNER STATUS
+   ============================================================ */
+
+.scanner-status {
+  margin-top: 12px;
+
+  padding: 11px 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 8px;
+
+  color: #475569;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+/* ============================================================
+   VERIFICATION MESSAGE
+   ============================================================ */
+
+.verification-message {
+  padding: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+.verification-message.loading {
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+
+  color: #1d4ed8;
+}
+
+.verification-message.success {
+  background: #dcfce7;
+
+  border-color: #bbf7d0;
+
+  color: #166534;
+
+  font-weight: 600;
+}
+
+.verification-message.error {
+  background: #fee2e2;
+
+  border-color: #fecaca;
+
+  color: #b91c1c;
+
+  font-weight: 600;
+}
+
+/* ============================================================
+   VOTER DETAILS
+   ============================================================ */
+
+.voter-details {
+  margin-top: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.verification-detail {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 13px 15px;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.verification-detail:last-child {
+  border-bottom: none;
+}
+
+.verification-detail span {
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.verification-detail strong {
+  max-width: 65%;
+
+  color: #0f172a;
+
+  font-size: 13px;
+
+  text-align: right;
+
+  word-break: break-word;
+}
+
+/* ============================================================
+   VOTING STATUS
+   ============================================================ */
+
+.status-pending {
+  padding: 5px 10px;
+
+  background: #fef3c7;
+
+  color: #92400e !important;
+
+  border-radius: 20px;
+
+  font-size: 11px !important;
+}
+
+.status-voted {
+  padding: 5px 10px;
+
+  background: #dcfce7;
+
+  color: #166534 !important;
+
+  border-radius: 20px;
+
+  font-size: 11px !important;
+}
+
+/* ============================================================
+   QR SECURITY NOTE
+   ============================================================ */
+
+.qr-dashboard-security {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  padding: 12px 14px;
+
+  background: #eff6ff;
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 9px;
+
+  color: #1e40af;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+.qr-dashboard-security span {
+  flex-shrink: 0;
+
+  font-size: 16px;
+}
+
+.qr-dashboard-security p {
+  margin: 0;
+}
+
+/* ============================================================
+   GENERAL DASHBOARD GRID
+   ============================================================ */
 
 .dashboard-grid {
   display: grid;
 
-  grid-template-columns: 1.3fr 1fr;
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(0, 1fr);
 
   gap: 20px;
 
@@ -127,16 +604,24 @@
 }
 
 .dashboard-card {
-  background: white;
+  min-width: 0;
+
+  padding: 25px;
+
+  background: #ffffff;
 
   border: 1px solid #e2e8f0;
 
   border-radius: 15px;
 
-  padding: 25px;
-
   box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+
+  box-sizing: border-box;
 }
+
+/* ============================================================
+   CARD HEADER
+   ============================================================ */
 
 .card-header {
   display: flex;
@@ -144,6 +629,8 @@
   justify-content: space-between;
 
   align-items: flex-start;
+
+  gap: 15px;
 
   margin-bottom: 25px;
 }
@@ -157,16 +644,20 @@
 }
 
 .card-header p {
+  margin: 5px 0 0;
+
   color: #64748b;
 
   font-size: 13px;
-
-  margin-top: 5px;
 }
 
 .card-icon {
   font-size: 22px;
 }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
 
 .progress-label {
   display: flex;
@@ -175,31 +666,47 @@
 
   margin-bottom: 9px;
 
+  color: #334155;
+
   font-size: 14px;
 }
 
+.progress-label strong {
+  color: #2563eb;
+}
+
 .progress-bar {
+  width: 100%;
+
   height: 10px;
+
+  overflow: hidden;
 
   background: #e2e8f0;
 
   border-radius: 10px;
-
-  overflow: hidden;
 }
 
 .progress-fill {
+  width: 0;
+
   height: 100%;
 
   background: #2563eb;
 
   border-radius: inherit;
+
+  transition: width 0.6s ease;
 }
+
+/* ============================================================
+   OVERVIEW ITEMS
+   ============================================================ */
 
 .overview-items {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   gap: 15px;
 
@@ -207,31 +714,34 @@
 }
 
 .overview-items div {
-  background: #f8fafc;
-
   padding: 15px;
+
+  background: #f8fafc;
 
   border-radius: 10px;
 }
 
-.overview-items span,
-.overview-items strong {
-  display: block;
-}
-
 .overview-items span {
+  display: block;
+
   color: #64748b;
 
   font-size: 13px;
 }
 
 .overview-items strong {
-  font-size: 22px;
+  display: block;
 
   margin-top: 4px;
 
   color: #0f172a;
+
+  font-size: 22px;
 }
+
+/* ============================================================
+   QUICK ACTIONS
+   ============================================================ */
 
 .quick-actions {
   display: flex;
@@ -250,24 +760,31 @@
 
   padding: 13px;
 
-  border-radius: 10px;
+  background: #f8fafc;
 
-  text-decoration: none;
+  border: 1px solid transparent;
+
+  border-radius: 10px;
 
   color: #0f172a;
 
-  background: #f8fafc;
+  text-decoration: none;
 
-  transition: 0.2s;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .quick-action:hover {
   background: #eff6ff;
 
+  border-color: #dbeafe;
+
   transform: translateX(3px);
 }
 
-.quick-action > span {
+.quick-action-icon {
   font-size: 22px;
 }
 
@@ -277,9 +794,27 @@
 }
 
 .quick-action small {
+  margin-top: 3px;
+
   color: #64748b;
 
-  margin-top: 3px;
+  font-size: 12px;
+}
+
+.action-arrow {
+  margin-left: auto;
+
+  color: #2563eb;
+
+  font-size: 18px;
+}
+
+/* ============================================================
+   ACTIVITY
+   ============================================================ */
+
+.activity-card {
+  margin-bottom: 0;
 }
 
 .activity-list {
@@ -310,24 +845,28 @@
 
   display: flex;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  border-radius: 50%;
+  flex-shrink: 0;
 
   background: #dcfce7;
 
   color: #166534;
+
+  border-radius: 50%;
 }
 
 .activity-content {
   flex: 1;
+
+  min-width: 0;
 }
 
 .activity-content strong {
-  font-size: 13px;
-
   color: #0f172a;
+
+  font-size: 13px;
 }
 
 .activity-content p {
@@ -339,14 +878,50 @@
 }
 
 .activity-item time {
+  flex-shrink: 0;
+
   color: #94a3b8;
 
   font-size: 11px;
 }
 
-@media (max-width: 1000px) {
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.empty-state {
+  padding: 35px;
+
+  text-align: center;
+
+  color: #64748b;
+}
+
+.empty-state span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 25px;
+}
+
+.empty-state p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .qr-dashboard-content {
+    grid-template-columns: 1fr;
   }
 
   .dashboard-grid {
@@ -354,20 +929,63 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .dashboard-container {
-    padding: 20px;
+    padding: 22px 18px 40px;
   }
 
   .welcome-section {
     flex-direction: column;
 
     align-items: flex-start;
+  }
 
-    gap: 15px;
+  .welcome-section h1 {
+    font-size: 25px;
   }
 
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .qr-dashboard-card {
+    padding: 20px;
+  }
+
+  .qr-dashboard-header {
+    flex-direction: column;
+  }
+
+  .qr-camera-panel,
+  .qr-result-panel {
+    padding: 17px;
+  }
+
+  .dashboard-qr-reader {
+    min-height: 280px;
+  }
+
+  .verification-detail {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .verification-detail strong {
+    max-width: 100%;
+
+    text-align: left;
+  }
+
+  .overview-items {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-item {
+    align-items: flex-start;
+
+    flex-wrap: wrap;
   }
 }

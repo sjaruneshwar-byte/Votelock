@@ -19,12 +19,14 @@ from routes.auth import auth_bp
 from routes.admin import admin_bp
 from routes.voters import voters_bp
 from routes.candidates import candidates_bp
+from routes.qr import qr_bp
 
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
 app.register_blueprint(voters_bp)
 app.register_blueprint(candidates_bp)
+app.register_blueprint(qr_bp)
 
 
 @app.route("/")

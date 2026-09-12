@@ -3,8 +3,8 @@
 
 <style>
   /* =====================================================
-   VOTELOCK - VOTER QR PAGE
-   ===================================================== */
+     VOTELOCK - VOTER QR PAGE
+     ===================================================== */
 
   .qr-page {
     max-width: 1000px;
@@ -24,91 +24,67 @@
 
   .qr-eyebrow {
     margin: 0 0 7px;
-
     font-size: 12px;
     font-weight: 700;
-
     letter-spacing: 1.5px;
-
     color: #64748b;
   }
 
   .qr-page-header h1 {
     margin: 0;
-
     color: #172554;
-
     font-size: 30px;
     font-weight: 700;
   }
 
   .qr-page-header p {
     margin: 8px 0 0;
-
     color: #64748b;
-
     font-size: 14px;
   }
 
   .qr-back-btn {
     display: inline-flex;
     align-items: center;
-
     padding: 10px 16px;
-
     background: white;
-
     border: 1px solid #dbe2ea;
-
     border-radius: 8px;
-
     color: #334155;
-
     text-decoration: none;
-
     font-size: 14px;
     font-weight: 600;
-
     transition: 0.2s ease;
   }
 
   .qr-back-btn:hover {
     background: #f8fafc;
-
     border-color: #cbd5e1;
   }
 
   /* =====================================================
-   MAIN QR CARD
-   ===================================================== */
+     MAIN QR CARD
+     ===================================================== */
 
   .qr-main-card {
     background: white;
-
     border: 1px solid #e2e8f0;
-
     border-radius: 14px;
-
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-
     overflow: hidden;
   }
 
-  /* ---------- VOTER INFORMATION ---------- */
+  /* ---------- VOTER INFORMATION HEADER ---------- */
 
   .qr-voter-section {
     padding: 25px 30px;
-
     border-bottom: 1px solid #e2e8f0;
-
     background: #f8fafc;
   }
 
   .qr-voter-info {
     display: flex;
-
     align-items: center;
-
     gap: 18px;
   }
 
@@ -117,46 +93,36 @@
     height: 55px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     background: #dbeafe;
-
     color: #2563eb;
 
     border-radius: 12px;
-
     font-size: 25px;
   }
 
   .qr-voter-info h2 {
     margin: 0;
-
     color: #172554;
-
     font-size: 20px;
   }
 
   .qr-voter-id {
     margin-top: 5px;
-
     color: #64748b;
-
     font-size: 13px;
   }
 
   /* =====================================================
-   CONTENT AREA
-   ===================================================== */
+     CONTENT AREA
+     ===================================================== */
 
   .qr-content {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 35px;
-
     padding: 35px;
   }
 
@@ -168,27 +134,20 @@
 
   .qr-information h3 {
     margin: 0 0 8px;
-
     color: #172554;
-
     font-size: 18px;
   }
 
   .qr-information-subtitle {
     margin: 0 0 25px;
-
     color: #64748b;
-
     font-size: 14px;
-
     line-height: 1.6;
   }
 
   .qr-detail {
     display: flex;
-
     justify-content: space-between;
-
     gap: 15px;
 
     padding: 14px 0;
@@ -202,29 +161,24 @@
 
   .qr-detail-label {
     color: #64748b;
-
     font-size: 13px;
-
     font-weight: 600;
   }
 
   .qr-detail-value {
     color: #334155;
-
     font-size: 14px;
-
     font-weight: 600;
-
     text-align: right;
   }
 
-  /* ---------- STATUS ---------- */
+  /* =====================================================
+     STATUS
+     ===================================================== */
 
   .qr-status {
     display: inline-flex;
-
     align-items: center;
-
     gap: 6px;
 
     padding: 5px 10px;
@@ -232,33 +186,27 @@
     border-radius: 20px;
 
     font-size: 12px;
-
     font-weight: 700;
   }
 
   .qr-status.pending {
     background: #fef3c7;
-
     color: #92400e;
   }
 
   .qr-status.voted {
     background: #dcfce7;
-
     color: #166534;
   }
 
   /* =====================================================
-   QR CODE AREA
-   ===================================================== */
+     QR CODE AREA
+     ===================================================== */
 
   .qr-display-section {
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 25px;
@@ -266,15 +214,12 @@
     background: #f8fafc;
 
     border: 1px solid #e2e8f0;
-
     border-radius: 12px;
   }
 
   .qr-display-section h3 {
     margin: 0 0 5px;
-
     color: #172554;
-
     font-size: 18px;
   }
 
@@ -284,15 +229,15 @@
     color: #64748b;
 
     font-size: 12px;
-
     text-align: center;
   }
 
-  /* ---------- QR BOX ---------- */
+  /* =====================================================
+     QR BOX
+     ===================================================== */
 
   .qr-box {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -312,30 +257,34 @@
 
   #qrcode {
     display: flex;
-
     align-items: center;
     justify-content: center;
+
+    width: 250px;
+    height: 250px;
   }
 
   #qrcode img,
   #qrcode canvas {
+    display: block;
+
     max-width: 250px;
     max-height: 250px;
   }
 
   /* =====================================================
-   SECURITY MESSAGE
-   ===================================================== */
+     SECURITY MESSAGE
+     ===================================================== */
 
   .qr-security-note {
     display: flex;
-
     gap: 10px;
-
     align-items: flex-start;
 
-    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
 
+    margin-top: 20px;
     padding: 12px 14px;
 
     background: #eff6ff;
@@ -347,17 +296,17 @@
     color: #1e40af;
 
     font-size: 12px;
-
     line-height: 1.5;
   }
 
   .qr-security-icon {
+    flex-shrink: 0;
     font-size: 16px;
   }
 
   /* =====================================================
-   FOOTER
-   ===================================================== */
+     FOOTER
+     ===================================================== */
 
   .qr-footer {
     padding: 20px 30px;
@@ -374,8 +323,8 @@
   }
 
   /* =====================================================
-   RESPONSIVE
-   ===================================================== */
+     RESPONSIVE
+     ===================================================== */
 
   @media (max-width: 800px) {
     .qr-page {
@@ -384,13 +333,11 @@
 
     .qr-page-header {
       align-items: flex-start;
-
       flex-direction: column;
     }
 
     .qr-content {
       grid-template-columns: 1fr;
-
       padding: 25px;
     }
 
@@ -398,13 +345,49 @@
       width: 260px;
       height: 260px;
     }
+
+    #qrcode {
+      width: 230px;
+      height: 230px;
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+      max-width: 230px;
+      max-height: 230px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .qr-page {
+      padding: 20px 12px;
+    }
+
+    .qr-content {
+      padding: 18px;
+    }
+
+    .qr-voter-section {
+      padding: 20px;
+    }
+
+    .qr-detail {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .qr-detail-value {
+      text-align: left;
+    }
   }
 </style>
 
 {% endblock %} {% block content %}
 
 <div class="qr-page">
-  <!-- PAGE HEADER -->
+  <!-- ==================================================
+       PAGE HEADER
+       ================================================== -->
 
   <div class="qr-page-header">
     <div>
@@ -420,10 +403,14 @@
     </a>
   </div>
 
-  <!-- MAIN CARD -->
+  <!-- ==================================================
+       MAIN CARD
+       ================================================== -->
 
   <div class="qr-main-card">
-    <!-- VOTER HEADER -->
+    <!-- ==================================================
+         VOTER HEADER
+         ================================================== -->
 
     <div class="qr-voter-section">
       <div class="qr-voter-info">
@@ -434,16 +421,21 @@
 
           <div class="qr-voter-id">
             Voter ID:
-            <strong>{{ voter["voter_id"] }}</strong>
+
+            <strong> {{ voter["voter_id"] }} </strong>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- CONTENT -->
+    <!-- ==================================================
+         CONTENT
+         ================================================== -->
 
     <div class="qr-content">
-      <!-- VOTER INFORMATION -->
+      <!-- ==================================================
+           VOTER INFORMATION
+           ================================================== -->
 
       <div class="qr-information">
         <h3>Voter Information</h3>
@@ -489,7 +481,9 @@
         </div>
       </div>
 
-      <!-- QR DISPLAY -->
+      <!-- ==================================================
+           QR DISPLAY
+           ================================================== -->
 
       <div class="qr-display-section">
         <h3>Scan to Verify</h3>
@@ -498,9 +492,18 @@
           Present this QR code to the verification camera
         </p>
 
+        <!--
+          IMPORTANT:
+          The QR token is stored in a data attribute.
+          This avoids putting Jinja syntax directly inside
+          JavaScript.
+        -->
+
         <div class="qr-box">
-          <div id="qrcode"></div>
+          <div id="qrcode" data-qr-token="{{ voter['qr_token'] }}"></div>
         </div>
+
+        <!-- SECURITY MESSAGE -->
 
         <div class="qr-security-note">
           <span class="qr-security-icon"> 🔒 </span>
@@ -513,7 +516,9 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
+    <!-- ==================================================
+         FOOTER
+         ================================================== -->
 
     <div class="qr-footer">
       VoteLock Smart Electronic Voting System • Secure Voter Verification
@@ -521,22 +526,37 @@
   </div>
 </div>
 
-<!-- QR CODE LIBRARY -->
+<!-- ======================================================
+     QR CODE LIBRARY
+     ====================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
+<!-- ======================================================
+     QR CODE GENERATION
+     ====================================================== -->
+
 <script>
-  const qrContainer = document.getElementById("qr-container");
-
-  const qrToken = "{{ voter['qr_token'] }}";
-
   const qrCodeElement = document.getElementById("qrcode");
 
-  new QRCode(qrCodeElement, {
-    text: qrToken,
-    width: 250,
-    height: 250,
-  });
+  if (qrCodeElement) {
+    const qrToken = qrCodeElement.dataset.qrToken;
+
+    if (qrToken) {
+      new QRCode(qrCodeElement, {
+        text: qrToken,
+        width: 250,
+        height: 250,
+
+        colorDark: "#111827",
+        colorLight: "#ffffff",
+
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+    } else {
+      qrCodeElement.innerHTML = "<p>QR token unavailable.</p>";
+    }
+  }
 </script>
 
 {% endblock %}
